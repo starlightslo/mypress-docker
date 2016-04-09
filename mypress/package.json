@@ -1,0 +1,36 @@
+{
+  "name": "mypress",
+  "version": "0.0.0",
+  "description": "MyPress is...",
+  "main": "index.js",
+  "scripts": {
+    "test": "NODE_ENV=test node_modules/.bin/mocha test/",
+    "start": "node_modules/.bin/nodemon index.js"
+  },
+  "author": "Tony Huang <tony@huang.ninja> (http://huang.ninja)",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5",
+    "proxyquire": "^1.7.4",
+    "sqlite3": "^3.1.1"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.3.0",
+    "bluebird": "^3.3.4",
+    "body-parser": "^1.15.0",
+    "connect-flash": "^0.1.1",
+    "connect-multiparty": "^2.0.0",
+    "connect-redis": "^3.0.2",
+    "errorhandler": "^1.4.3",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "jsonwebtoken": "^5.7.0",
+    "knex": "^0.10.0",
+    "nodemon": "^1.9.1",
+    "objection": "^0.4.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "swig": "^1.4.2"
+  }
+}

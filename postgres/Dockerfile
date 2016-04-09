@@ -1,0 +1,7 @@
+FROM postgres:latest
+
+#ENV POSTGRES_PASSWORD mypress
+#ENV POSTGRES_USER mypress
+#ENV POSTGRES_DB mypress
+
+EXPOSE 5432
