@@ -6,7 +6,7 @@
 					<div class="mail-toolbar clearfix">
 						<div class="float-left">
 							<div class="btn-group">
-								<a class="btn btn-default" href="menu/add">{{ T.new }}</a>
+								<a class="btn btn-default" href="skill/add">{{ T.new }}</a>
 							</div>
 						</div>
 						<div class="float-right">
@@ -28,24 +28,25 @@
 					</div>
 					<table class="table">
 						<tbody>
-							{% for menu in menuList %}
+							{% for skill in skillList %}
 								<tr class="table-row">
 									<td>
-										<span class="mar">{{ menu.order }}</span>
+										<span class="mar">{{ skill.order }}</span>
 									</td>
 									<td class="table-text">
-										<a href="menu/view/{{ menu.key }}?lang={{ selectedLanguage }}"><h6>{{ menu.name }}</h6></a>
+										<a href="skill/view/{{ skill.key }}?lang={{ selectedLanguage }}"><h6>{{ skill.name }}</h6></a>
 									</td>
 									<td>
-										{{ menu.link }}
+										{{ skill.percent }}%
 									</td>
 									<td>
-										{% if menu.target.length > 0 %}
-											<span class="fam">{{ menu.target }}</span>
-										{% endif %}
+										<span class="mar" style="background-color: {{ skill.color }}">{{ skill.color }}</span>
+									</td>
+									<td>
+										{{ skill.animateTime }}
 									</td>
 									<td >
-										<a href="#" onclick="deleteMenu('{{ menu.key }}');"><i class="fa delete fa-trash-o"></i></a>
+										<a href="#" onclick="deleteSkill('{{ skill.key }}');"><i class="fa delete fa-trash-o"></i></a>
 									</td>
 								</tr>
 							{% endfor %}
@@ -58,10 +59,10 @@
 	<div class="clearfix"> </div>
 </div>
 <script type="text/javascript">
-	function deleteMenu(key){
+	function deleteSkill(key){
 		if (confirm("Are you sure you want to delete?")) {
 			$.ajax({
-				url: '{{ server }}/admin/menu/' + key,
+				url: '{{ server }}/admin/skill/' + key,
 				type: 'DELETE',
 				success: function(data) {
 					// Delete success and reload

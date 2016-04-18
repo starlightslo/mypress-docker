@@ -6,7 +6,7 @@
 					<div class="mail-toolbar clearfix">
 						<div class="float-left">
 							<div class="btn-group">
-								<a class="btn btn-default" href="menu/add">{{ T.new }}</a>
+								<a class="btn btn-default" href="portfolio/add">{{ T.new }}</a>
 							</div>
 						</div>
 						<div class="float-right">
@@ -19,7 +19,29 @@
 								<ul class="dropdown-menu float-right">
 									{% for lang in languageList %}
 									<li>
-										<a href="?lang={{ lang }}">{{ lang }}</a>
+										<a href="?lang={{ lang }}&p={{ page }}">{{ lang }}</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</div>
+							<div class="btn-group">
+								<a class="btn btn-default {% if page == 1 %} disabled {% endif %}" href="?lang={{ selectedLanguage }}&p={{ page-1 }}">
+									<i class="fa fa-angle-left"></i>
+								</a>
+								<a class="btn btn-default {% if page == totalPage %} disabled {% endif %}" href="?lang={{ selectedLanguage }}&p={{ page+1 }}">
+									<i class="fa fa-angle-right"></i>
+								</a>
+							</div>
+							<div class="dropdown">
+								<a href="#" title="" class="btn btn-default" data-toggle="dropdown" aria-expanded="false">
+									{{ page }}
+									<i class="fa fa-chevron-down icon_8"></i>
+									<div class="ripple-wrapper"></div>
+								</a>
+								<ul class="dropdown-menu float-right">
+									{% for i in Array(totalPage) %}
+									<li>
+										<a href="?p={{ loop.index }}">{{ loop.index }}</a>
 									</li>
 									{% endfor %}
 								</ul>
@@ -28,24 +50,22 @@
 					</div>
 					<table class="table">
 						<tbody>
-							{% for menu in menuList %}
+							{% for portfolio in portfolioList %}
 								<tr class="table-row">
 									<td>
-										<span class="mar">{{ menu.order }}</span>
+										<span class="mar">{{ loop.index }}</span>
 									</td>
 									<td class="table-text">
-										<a href="menu/view/{{ menu.key }}?lang={{ selectedLanguage }}"><h6>{{ menu.name }}</h6></a>
+										<a href="portfolio/view/{{ portfolio.key }}?lang={{ selectedLanguage }}&p={{ page }}"><h6>{{ portfolio.name }}</h6></a>
 									</td>
 									<td>
-										{{ menu.link }}
+										{{ portfolio.client }}
 									</td>
 									<td>
-										{% if menu.target.length > 0 %}
-											<span class="fam">{{ menu.target }}</span>
-										{% endif %}
+										{{ portfolio.role }}
 									</td>
 									<td >
-										<a href="#" onclick="deleteMenu('{{ menu.key }}');"><i class="fa delete fa-trash-o"></i></a>
+										<a href="#" onclick="deletePortfolio('{{ portfolio.key }}');"><i class="fa delete fa-trash-o"></i></a>
 									</td>
 								</tr>
 							{% endfor %}
@@ -58,10 +78,10 @@
 	<div class="clearfix"> </div>
 </div>
 <script type="text/javascript">
-	function deleteMenu(key){
+	function deletePortfolio(key){
 		if (confirm("Are you sure you want to delete?")) {
 			$.ajax({
-				url: '{{ server }}/admin/menu/' + key,
+				url: '{{ server }}/admin/portfolio/' + key,
 				type: 'DELETE',
 				success: function(data) {
 					// Delete success and reload
