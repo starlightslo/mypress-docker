@@ -8,7 +8,7 @@ module.exports = {
 	secret: '123456789012345678901234567890',
 	db: {
 		client: 'postgresql',
-		host: 'localhost',
+		host: process.env.POSTGRES_HOST || 'localhost',
 		database: 'mypress',
 		pool: {
 			min: 2,
@@ -28,8 +28,8 @@ module.exports = {
 		}
 	},
 	redis: {
-		host: 'localhost',
-		port: 6379,
+		host: process.env.REDIS_HOST || 'localhost',
+		port: process.env.REDIS_PORT || 6379,
 		db: 0,
 		pass: ''
 	}

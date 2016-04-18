@@ -4,25 +4,30 @@ services:
     build: mypress/.
     environment:
       - NODE_ENV=production
+      - POSTGRES_HOST=postgres
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     volumes:
-      - /Users/Tony/Documents/tony/mypress-docker/mypress:/usr/src/app
+      - ./mypress:/usr/src/app
     command: bash -c "npm install pg && npm install && npm start"
     expose:
       - '8080'
     ports:
       - '8080:8080'
-    depends_on:
-      - mypress-postgres
-      - mypress-redis
+    links:
+      - mypress-postgres:postgres
+      - mypress-redis:redis
   mypress-postgres:
     build: postgres/.
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=
       - POSTGRES_DB=mypress
-    ports:
-      - '5432:5432'
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+    expose:
+      - '5432'
   mypress-redis:
     build: redis/.
-    ports:
-      - '6379:6379'
+    expose:
+      - '6379'
