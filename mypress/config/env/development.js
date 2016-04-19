@@ -29,11 +29,5 @@ module.exports = {
 			user: 'postgres',
 			password: ''	
 		}
-	},
-	redis: {
-		host: 'localhost',
-		port: 6379,
-		db: 0,
-		pass: ''
 	}
 }
