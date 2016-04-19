@@ -3,6 +3,7 @@
 
 const express = require('express')
 const session = require('express-session')
+const compression = require('compression')
 const RedisStore = require('connect-redis')(session)
 const errorhandler = require('errorhandler')
 const app = express()
@@ -22,16 +23,22 @@ class Server {
 		// Enable the proxy
 		app.set('trust proxy', 'loopback')
 
+		// compress responses
+		app.use(compression())
+
 		// Set variables into app
 		app.set('secret', this.config.secret)
 
 		// Set default public directory
-		app.use(express.static(DEFAULT_PUBLIC_DIRECTORY))
+		app.use(express.static(DEFAULT_PUBLIC_DIRECTORY, {
+			maxAge: this.config.cache.maxage
+		}))
 
 		// Set views and engine
 		app.engine('html', swig.renderFile)
 		app.set('views', config.root + '/app/views')
 		app.set('view engine', 'html')
+		app.set('view cache', true)
 
 		this.initMiddleware()
 		this.initPassport()
@@ -49,7 +56,9 @@ class Server {
 
 	// Set the public directory
 	setPublicDirectory(path) {
-		app.use(express.static(path))
+		app.use(express.static(path, {
+			maxAge: this.config.cache.maxage
+		}))
 	}
 
 	initMiddleware() {
